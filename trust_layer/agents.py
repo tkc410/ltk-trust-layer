@@ -85,7 +85,14 @@ def claim_agent(post: dict, emit) -> CheckResult:
         system = (
             "You check whether the factual claims in a creator caption (price, material, "
             "comparison, benefit) are supported by the product data. Enthusiasm and opinion "
-            "are not claims. Also return \"needs_more\": true if the data is not enough to decide."
+            "are not claims.\n"
+            "fail = the data contradicts a claim, or the caption makes a health or medical benefit claim.\n"
+            "warn = a claim cannot be checked against the data and a shopper would rely on it, "
+            "such as a comparison to another brand's product.\n"
+            "pass = every checkable claim matches the data.\n"
+            # Why: without this, the model warns on details the short record simply omits.
+            "If the full product description could settle a claim, return \"needs_more\": true "
+            "instead of warning."
         )
         prompt = f"Caption: {post['caption']}\nProduct data: {json.dumps(record)}"
         answer, usage = llm.ask_json(llm.STRONG_MODEL, system, prompt)

@@ -1,6 +1,6 @@
 {
   "pr01": {"name": "Linen Throw Pillow", "retailer": "Harbor & Pine", "brand": "Harbor & Pine", "status": "in_stock", "price_at_post": 34.0, "current_price": 34.0, "material": "linen", "details": "Linen cover, feather insert, 20 inch."},
-  "pr02": {"name": "Everyday Tote", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "in_stock", "price_at_post": 48.0, "current_price": 48.0, "material": "canvas", "details": "Heavy canvas tote with leather handles."},
+  "pr02": {"name": "Everyday Tote", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "in_stock", "price_at_post": 48.0, "current_price": 48.0, "material": "canvas", "details": "Heavy canvas tote with leather handles. Fits a 15 inch laptop."},
   "pr03": {"name": "Glow Serum", "retailer": "Lumen Skin", "brand": "Lumen Skin", "status": "in_stock", "price_at_post": 29.0, "current_price": 29.0, "material": "n/a", "details": "Vitamin C serum for daily use. Cosmetic product."},
   "pr04": {"name": "Cozy Crew Sweater", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "in_stock", "price_at_post": 39.0, "current_price": 62.0, "material": "acrylic blend", "details": "70% acrylic, 30% wool. Relaxed fit."},
   "pr05": {"name": "Quilted Shoulder Bag", "retailer": "Harbor & Pine", "brand": "Harbor & Pine", "status": "in_stock", "price_at_post": 55.0, "current_price": 55.0, "material": "faux leather", "details": "Quilted faux leather bag with chain strap."},
