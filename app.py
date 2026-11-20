@@ -133,8 +133,10 @@ class TraceView:
     def on_event(self, event):
         agent, kind, detail = event["agent"], event["kind"], event["detail"]
         if agent == "orchestrator":
-            self.decisions.append(f"- *{kind}*: {md(detail)}")
-            self.strip.markdown("**Orchestrator**\n" + "\n".join(self.decisions))
+            # One wrapped line, not a list, so the agent cards below stay above the fold.
+            self.decisions.append(f"<i>{kind}</i>: {safe(detail)}")
+            self.strip.markdown('<p class="orch-line"><b>Orchestrator</b> · ' + " → ".join(self.decisions) + "</p>",
+                                unsafe_allow_html=True)
             # The orchestrator announces which agents it runs or skips before they act.
             for key, name in (("claim", "claim agent"), ("brand_safety", "brand safety agent")):
                 if f"skip {name}" in detail:
@@ -265,9 +267,10 @@ def post_card(post):
     avatar = f'<span class="avatar {tint}">{post["creator"].lstrip("@")[:2].upper()}</span>'
     photo = photo_uri(post["post_id"])
     with st.container(border=True, key=key("post")):
-        left, right = st.columns([2, 3], vertical_alignment="center")
-        if photo:  # an LTK-style tall photo with the creator's avatar on it
-            left.markdown(f'<div class="post-photo"><img src="{photo}" alt="Lifestyle photo of the '
+        # A narrow photo column: the card must stay short so the agent cards sit above the fold.
+        left, right = st.columns([1, 3], vertical_alignment="center")
+        if photo:  # an LTK-style tall photo with the creator's avatar on it, compact on this screen
+            left.markdown(f'<div class="post-photo compact"><img src="{photo}" alt="Lifestyle photo of the '
                           f'{safe(record["name"])}">{avatar}</div>', unsafe_allow_html=True)
         else:  # no photo for this post: the illustrated tile
             left.markdown(f'<div class="product-tile {tint}"><span>{icon}</span></div>', unsafe_allow_html=True)
