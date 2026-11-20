@@ -13,8 +13,8 @@ SMALL_MODEL = os.getenv("TRUST_SMALL_MODEL", "claude-haiku-5-5")
 STRONG_MODEL = os.getenv("TRUST_STRONG_MODEL", "claude-sonnet-5-5")
 
 # Why: a hung connection must not stall a live demo for minutes. Each call gives up after
-# 30 seconds, and retries are off so 30 seconds is the worst case. The slowest call seen is about 7 seconds.
-TIMEOUT_SECONDS = 30
+# 15 seconds, and retries are off so 15 seconds is the worst case. The slowest call seen is about 7 seconds.
+TIMEOUT_SECONDS = 15
 
 
 def client():
