@@ -12,6 +12,17 @@ from pathlib import Path
 SMALL_MODEL = os.getenv("TRUST_SMALL_MODEL", "claude-haiku-5-5")
 STRONG_MODEL = os.getenv("TRUST_STRONG_MODEL", "claude-sonnet-5-5")
 
+# Why: a hung connection must not stall a live demo for minutes. Each call gives up after
+# 30 seconds, and retries are off so 30 seconds is the worst case. The slowest call seen is about 7 seconds.
+TIMEOUT_SECONDS = 30
+
+
+def client():
+    import anthropic  # imported here so offline mode needs no install
+
+    return anthropic.Anthropic(timeout=TIMEOUT_SECONDS, max_retries=0)
+
+
 JSON_RULE = (
     'Reply with one JSON object only, no other text: '
     '{"verdict": "pass" | "warn" | "fail", "confidence": 0.0-1.0, "reason": "one short sentence"}'
@@ -28,10 +39,8 @@ def live() -> bool:
 
 def ask_text(model: str, system: str, user: str) -> tuple[str, dict]:
     """Send one prompt, return (plain text answer, usage numbers). Used for shopper answers."""
-    import anthropic
-
     start = time.time()
-    msg = anthropic.Anthropic().messages.create(
+    msg = client().messages.create(
         model=model,
         max_tokens=2000,
         system=system,
@@ -49,11 +58,8 @@ def ask_text(model: str, system: str, user: str) -> tuple[str, dict]:
 
 def ask_json(model: str, system: str, user: str) -> tuple[dict, dict]:
     """Send one prompt, return (parsed JSON answer, usage numbers)."""
-    import anthropic  # imported here so offline mode needs no install
-
-    client = anthropic.Anthropic()
     start = time.time()
-    msg = client.messages.create(
+    msg = client().messages.create(
         model=model,
         max_tokens=2000,  # headroom for any thinking the model does before its answer
         system=system + "\n" + JSON_RULE,
