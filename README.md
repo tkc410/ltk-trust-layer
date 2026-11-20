@@ -1,8 +1,11 @@
-# Trust Layer for LTK AI (demo)
+# RecCheck
+
+A trust layer for creator recommendations.
 
 Make sure every creator post that feeds an AI answer has earned its place there.
+Built with LTK's creator commerce model in mind.
 
-The Trust Layer scores a creator post on four signals (claim, freshness, disclosure, brand safety)
+RecCheck scores a creator post on four signals (claim, freshness, disclosure, brand safety)
 before it is allowed to ground an AI answer. Strong posts pass, weak ones are held back, and the
 uncertain ones go to a human reviewer. All data is synthetic, and the post photos are AI-generated
 stand-ins.

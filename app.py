@@ -1,4 +1,4 @@
-"""Trust Layer demo UI.
+"""RecCheck demo UI: a trust layer for creator recommendations.
 
     streamlit run app.py
 
@@ -414,9 +414,10 @@ def eval_screen():
 
 
 # ------------------------------------------------------------ page
-st.set_page_config(page_title="Trust Layer for LTK AI", layout="wide")
+st.set_page_config(page_title="RecCheck", layout="wide")
 st.markdown(f"<style>{(ROOT / 'ui_style.css').read_text()}</style>", unsafe_allow_html=True)  # the look, see ui_style.css
-st.sidebar.title("Trust Layer")
+st.sidebar.title("RecCheck")
+st.sidebar.caption("A trust layer for creator recommendations")
 screen = st.sidebar.radio("Screen", ["Agent trace", "With and without", "Eval panel", "Phase 2 mock"])
 st.sidebar.caption("All data is synthetic. Post photos are AI-generated stand-ins.")
 st.subheader(screen)

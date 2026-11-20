@@ -1,4 +1,4 @@
-/* Trust Layer look: light theme, solid colors, a little motion. Loaded by app.py.
+/* RecCheck look: light theme, solid colors, a little motion. Loaded by app.py.
    Hooks are the container keys app.py sets (st-key-card-*, st-key-result-*, ...), not Streamlit's
    internal class names, so the styling survives Streamlit upgrades. */
 
