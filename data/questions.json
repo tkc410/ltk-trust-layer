@@ -1,0 +1,6 @@
+[
+  {"question_id": "q1", "question": "I want a cashmere sweater under $50. What do you recommend?", "keywords": ["cashmere", "sweater"], "shows": "False cashmere claims (p004, p018) reach the unfiltered answer."},
+  {"question_id": "q2", "question": "What can I use for breakouts?", "keywords": ["breakouts", "acne", "skin"], "shows": "Medical claims (p007, p020) are filtered out; a tagged skincare post stays in."},
+  {"question_id": "q3", "question": "Can you recommend a cozy throw blanket?", "keywords": ["throw", "blanket"], "shows": "A wrong price (p017) is filtered out; a clean throw post remains."},
+  {"question_id": "q4", "question": "Any ideas for a reading corner refresh?", "keywords": ["reading", "corner", "lamp", "pillow"], "shows": "Control: every retrieved post passes, so both answers should match."}
+]

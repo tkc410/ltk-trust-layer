@@ -1,0 +1,238 @@
+{
+ "generated_at": "2026-11-20T04:30:59+00:00",
+ "model": "claude-sonnet-5-5",
+ "routes_from_eval_run": "2026-11-20T04:21:00+00:00",
+ "questions": [
+  {
+   "question_id": "q1",
+   "question": "I want a cashmere sweater under $50. What do you recommend?",
+   "keywords": [
+    "cashmere",
+    "sweater"
+   ],
+   "shows": "False cashmere claims (p004, p018) reach the unfiltered answer.",
+   "retrieved": [
+    "p004",
+    "p018",
+    "p019"
+   ],
+   "excluded": [
+    {
+     "post_id": "p004",
+     "route": "hold",
+     "reason": "freshness warn, claim fail"
+    },
+    {
+     "post_id": "p018",
+     "route": "hold",
+     "reason": "claim fail"
+    },
+    {
+     "post_id": "p019",
+     "route": "review",
+     "reason": "brand_safety fail"
+    }
+   ],
+   "unfiltered": {
+    "posts_given": [
+     "p004",
+     "p018",
+     "p019"
+    ],
+    "answer": "I'd recommend the **Cozy Crew Sweater**. According to @knitandcoffee, it's 100% cashmere and costs only $39, which fits your under-$50 budget.\n\nThe other posts don't fit as well:\n- **Soft Knit Wrap** (@budgetchic): The creator calls it real cashmere and very soft, but it's a wrap, not a sweater, and the post gives no price.\n- **Sweater Vest** (@knitandcoffee): The creator calls it cheap and cute, but the post doesn't say it's cashmere or give a price. It's also marked #ad.\n\nPosts used: p004, p018, p019",
+    "posts_used": [
+     "p004",
+     "p018",
+     "p019"
+    ],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 279,
+     "output_tokens": 210,
+     "seconds": 2.41
+    }
+   },
+   "filtered": {
+    "posts_given": [],
+    "answer": "I don't have any creator posts to draw from, so I can't recommend a cashmere sweater under $50. Nothing was provided that mentions a product, price, or brand that fits your question.\n\nIf you can share some creator posts about cashmere sweaters, I'd be happy to pick out options within your budget.\n\nPosts used: none",
+    "posts_used": [],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 133,
+     "output_tokens": 103,
+     "seconds": 2.02
+    }
+   }
+  },
+  {
+   "question_id": "q2",
+   "question": "What can I use for breakouts?",
+   "keywords": [
+    "breakouts",
+    "acne",
+    "skin"
+   ],
+   "shows": "Medical claims (p007, p020) are filtered out; a tagged skincare post stays in.",
+   "retrieved": [
+    "p007",
+    "p010",
+    "p020",
+    "p022"
+   ],
+   "excluded": [
+    {
+     "post_id": "p007",
+     "route": "hold",
+     "reason": "claim fail, brand_safety fail"
+    },
+    {
+     "post_id": "p020",
+     "route": "hold",
+     "reason": "claim fail, brand_safety fail"
+    },
+    {
+     "post_id": "p022",
+     "route": "review",
+     "reason": "disclosure warn"
+    }
+   ],
+   "unfiltered": {
+    "posts_given": [
+     "p007",
+     "p010",
+     "p020",
+     "p022"
+    ],
+    "answer": "Two of the creator posts address breakouts, and both are sponsored by Lumen Skin:\n\n- **Clear Skin Cleanser (p007):** @glowwithtess says it \"cures breakouts in a week.\"\n- **Spot Gel (p020):** @glowwithtess says it \"treats acne overnight.\"\n\nThese are the creator's own claims in paid posts, so treat them with some caution. The posts give no details such as ingredients, skin types, or results from other users.\n\nThe other posts don't cover breakouts. The Barrier Moisturizer (p010) is described for dry winter skin, and the Tinted Lip Balm (p022) is just a lip product.\n\nPosts used: p007, p020",
+    "posts_used": [
+     "p007",
+     "p020"
+    ],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 331,
+     "output_tokens": 367,
+     "seconds": 3.32
+    }
+   },
+   "filtered": {
+    "posts_given": [
+     "p010"
+    ],
+    "answer": "None of the provided posts address breakouts. The only post (p010 from @glowwithtess) is a sponsored (#ad) mention of the Lumen Skin Barrier Moisturizer for dry winter skin, and it doesn't say anything about acne or breakouts.\n\nIf you can share posts that discuss breakout-prone skin, I can help narrow down options.\n\nPosts used: none",
+    "posts_used": [],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 170,
+     "output_tokens": 125,
+     "seconds": 2.19
+    }
+   }
+  },
+  {
+   "question_id": "q3",
+   "question": "Can you recommend a cozy throw blanket?",
+   "keywords": [
+    "throw",
+    "blanket"
+   ],
+   "shows": "A wrong price (p017) is filtered out; a clean throw post remains.",
+   "retrieved": [
+    "p001",
+    "p017",
+    "p028"
+   ],
+   "excluded": [
+    {
+     "post_id": "p017",
+     "route": "hold",
+     "reason": "claim fail"
+    }
+   ],
+   "unfiltered": {
+    "posts_given": [
+     "p001",
+     "p017",
+     "p028"
+    ],
+    "answer": "Based on the creator posts, two options fit what you're looking for:\n\n- **Sherpa Throw (p028):** @homewithjuno is \"100% obsessed\" with it and says they nap under it daily, which suggests it's comfortable and cozy.\n- **Chunky Throw Blanket (p017):** @homewithjuno notes it's only $25. The post doesn't say anything else about how it feels, so I can't speak to its coziness beyond the price.\n\nIf coziness is your priority, the Sherpa Throw has the stronger endorsement. If budget matters, the Chunky Throw Blanket has a stated price of $25. The post for the Sherpa Throw doesn't list a price.\n\nThe Linen Throw Pillow (p001) is a pillow, not a blanket, so I left it out.\n\nPosts used: p028, p017",
+    "posts_used": [
+     "p028",
+     "p017"
+    ],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 266,
+     "output_tokens": 269,
+     "seconds": 2.58
+    }
+   },
+   "filtered": {
+    "posts_given": [
+     "p001",
+     "p028"
+    ],
+    "answer": "A good fit from the posts is the **Sherpa Throw**, which @homewithjuno raves about: \"100% obsessed with this throw, I nap under it daily.\" The creator uses it every day, which suggests it's comfortable. The post doesn't give details like size, material feel, warmth level, or price, so I can't say more than that.\n\nThe other post (p001) is about a Linen Throw Pillow, which is a pillow rather than a blanket, so it doesn't answer your question.\n\nPosts used: p028",
+    "posts_used": [
+     "p028"
+    ],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 221,
+     "output_tokens": 162,
+     "seconds": 2.34
+    }
+   }
+  },
+  {
+   "question_id": "q4",
+   "question": "Any ideas for a reading corner refresh?",
+   "keywords": [
+    "reading",
+    "corner",
+    "lamp",
+    "pillow"
+   ],
+   "shows": "Control: every retrieved post passes, so both answers should match.",
+   "retrieved": [
+    "p001",
+    "p009"
+   ],
+   "excluded": [],
+   "unfiltered": {
+    "posts_given": [
+     "p001",
+     "p009"
+    ],
+    "answer": "Two posts from @homewithjuno could help with a reading corner refresh:\n\n- **Linen Throw Pillow (p001):** The creator refreshed their reading corner with this pillow and said it \"pulls the whole room together.\"\n- **Brass Table Lamp (p009):** The creator swapped this lamp in for the cozy season and described the light as warm, with \"zero regrets.\" The post doesn't say it was for a reading corner, but warm lighting could suit one.\n\nThe posts don't give details like sizes, colors, prices, or how the items look together, so I can't say more about how they would work in your space.\n\nPosts used: p001, p009",
+    "posts_used": [
+     "p001",
+     "p009"
+    ],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 229,
+     "output_tokens": 203,
+     "seconds": 2.77
+    }
+   },
+   "filtered": {
+    "posts_given": [
+     "p001",
+     "p009"
+    ],
+    "answer": "Here are two ideas from the creator posts:\n\n- **Add a Linen Throw Pillow.** @homewithjuno used this one when refreshing a reading corner and said it \"pulls the whole room together.\"\n- **Swap in a Brass Table Lamp.** @homewithjuno switched to this lamp for the cozy season and described it as giving \"warm light, zero regrets.\" Warm lighting could suit a reading spot, though the post doesn't say whether the lamp was used in the reading corner.\n\nThe posts don't give details like sizes, colors, prices, or how the pieces are arranged, so I can't say more than that.\n\nPosts used: p001, p009",
+    "posts_used": [
+     "p001",
+     "p009"
+    ],
+    "usage": {
+     "model": "claude-sonnet-5-5",
+     "input_tokens": 229,
+     "output_tokens": 211,
+     "seconds": 2.39
+    }
+   }
+  }
+ ]
+}

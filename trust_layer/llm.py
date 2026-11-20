@@ -26,6 +26,27 @@ def live() -> bool:
     return creds.is_dir() and any(creds.glob("*.json"))
 
 
+def ask_text(model: str, system: str, user: str) -> tuple[str, dict]:
+    """Send one prompt, return (plain text answer, usage numbers). Used for shopper answers."""
+    import anthropic
+
+    start = time.time()
+    msg = anthropic.Anthropic().messages.create(
+        model=model,
+        max_tokens=2000,
+        system=system,
+        messages=[{"role": "user", "content": user}],
+    )
+    text = "".join(b.text for b in msg.content if b.type == "text").strip()
+    usage = {
+        "model": model,
+        "input_tokens": msg.usage.input_tokens,
+        "output_tokens": msg.usage.output_tokens,
+        "seconds": round(time.time() - start, 2),
+    }
+    return text, usage
+
+
 def ask_json(model: str, system: str, user: str) -> tuple[dict, dict]:
     """Send one prompt, return (parsed JSON answer, usage numbers)."""
     import anthropic  # imported here so offline mode needs no install
