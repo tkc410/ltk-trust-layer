@@ -17,6 +17,7 @@ from pathlib import Path
 import streamlit as st
 
 import traces
+from phase2_mock import phase2_screen
 from trust_layer import llm, tools
 from trust_layer.orchestrator import score_post
 
@@ -413,7 +414,7 @@ def eval_screen():
 st.set_page_config(page_title="Trust Layer for LTK AI", layout="wide")
 st.markdown(f"<style>{(ROOT / 'ui_style.css').read_text()}</style>", unsafe_allow_html=True)  # the look, see ui_style.css
 st.sidebar.title("Trust Layer")
-screen = st.sidebar.radio("Screen", ["Agent trace", "With and without", "Eval panel"])
+screen = st.sidebar.radio("Screen", ["Agent trace", "With and without", "Eval panel", "Phase 2 mock"])
 st.sidebar.caption("All data is synthetic. Post photos are AI-generated stand-ins.")
 st.subheader(screen)
 if screen == "Agent trace":
@@ -421,5 +422,7 @@ if screen == "Agent trace":
     trace_screen(all_posts)
 elif screen == "With and without":
     compare_screen()
-else:
+elif screen == "Eval panel":
     eval_screen()
+else:
+    phase2_screen()

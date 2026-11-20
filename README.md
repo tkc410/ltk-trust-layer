@@ -8,7 +8,8 @@ All data is synthetic.
     pip install -r requirements.txt
     streamlit run app.py         # the demo UI, opens in replay mode
 
-The UI has three screens: the agent trace, the with-and-without comparison, and the eval panel.
+The UI has four screens: the agent trace, the with-and-without comparison, the eval panel, and the
+Phase 2 mock (a design screen, not working code).
 
 ### Replay mode (the default)
 
@@ -57,13 +58,14 @@ Models are set with TRUST_SMALL_MODEL and TRUST_STRONG_MODEL (see trust_layer/ll
 | compare.py | The same shopper questions answered with and without the trust layer |
 | traces.py | Records traces and replays them |
 | app.py | The Streamlit UI. It draws and never decides. |
+| phase2_mock.py | Phase 2 mock screen, drawn from data/phase2_mock.json. Not built, no logic. |
 | tests/test_route.py | Unit tests for the hard gates, caps and score bands |
 
 ## Status
 
 Built: agents, orchestrator, scoring, 30 labeled posts and 10 holdout posts, eval script,
 with-and-without comparison, UI, recorded traces with replay and a passcode for live mode.
-Not built yet: Phase 2 mock.
+Designed, shown as a mock: Phase 2, Out-of-Stock Recovery.
 
 Labels are what a careful reviewer would decide, not what the rules predict. The holdout set was
 written after the scoring fixes and was not used for tuning.

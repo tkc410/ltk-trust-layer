@@ -1,0 +1,39 @@
+{
+  "_note": "Mock data for the Phase 2 screen. Nothing here is computed. Commission inputs are illustrative placeholders, not LTK numbers.",
+  "post": {
+    "creator": "@styledbymara",
+    "photo": "p008",
+    "caption": "Summer uniform: my cotton ribbed tank (I own it in three colors), the quilted bag, a silk scarf and the belt I wear with everything.",
+    "paid_partnership": false,
+    "linked": ["pr08", "pr05", "pr11", "pr13"],
+    "dead": "pr08"
+  },
+  "search": [
+    {"tier": 1, "looked_for": "Ribbed Tank in Oat at other partnered retailers", "found": "None in stock"},
+    {"tier": 2, "looked_for": "Ribbed Tank line, other colors", "found": "Sage in stock"},
+    {"tier": 3, "looked_for": "Similar tanks within 20% of $18", "found": "Jersey Tank, $16"}
+  ],
+  "candidate": {
+    "name": "Ribbed Tank, Sage",
+    "brand": "Northwind Knits",
+    "retailer": "Harbor & Pine",
+    "tier": 2,
+    "tier_name": "Same line, different variant",
+    "material": "cotton",
+    "price": 18.0,
+    "why": ["Same product line and cut as the dead link", "Cotton, matching the caption's claim", "In stock in all sizes"]
+  },
+  "rejected": {
+    "name": "Jersey Tank",
+    "tier": 3,
+    "material": "polyester",
+    "price": 16.0,
+    "why": "The caption says cotton, so a polyester substitute fails the claim check."
+  },
+  "commission": {
+    "clicks_30_days": 1200,
+    "conversion_rate": 0.03,
+    "average_order_value": 45.0,
+    "commission_rate": 0.10
+  }
+}
