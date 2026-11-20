@@ -20,31 +20,33 @@ def score_post(post: dict, on_event=None) -> dict:
 
     results = {}
 
+    def record(r):
+        # Why: send each verdict as soon as its agent returns, so a live view completes cards one by one.
+        results[r.agent] = r
+        emit(r.agent, "verdict", f"{r.verdict} ({r.confidence:.2f}) {r.reason}")
+
     # Rule 1: freshness and the disclosure tag check always run. Both are free.
     emit("orchestrator", "decide", "run freshness and disclosure (no LLM cost)")
-    results["freshness"] = agents.freshness_agent(post, emit)
+    record(agents.freshness_agent(post, emit))
     # Rule 2 lives inside the disclosure agent: it calls the LLM only when a paid post has no clear tag.
-    results["disclosure"] = agents.disclosure_agent(post, emit)
+    record(agents.disclosure_agent(post, emit))
 
     # Rule 3: the claim agent runs only when the caption has a checkable claim.
     if agents.has_checkable_claim(post["caption"]):
         emit("orchestrator", "decide", "caption has a checkable claim, run claim agent")
-        results["claim"] = agents.claim_agent(post, emit)
+        record(agents.claim_agent(post, emit))
     else:
         emit("orchestrator", "decide", "no checkable claim, skip claim agent")
-        results["claim"] = agents.CheckResult("claim", "skipped", 1.0, "No checkable claim in caption.")
+        record(agents.CheckResult("claim", "skipped", 1.0, "No checkable claim in caption."))
 
     # Rule 4: brand safety runs only on sponsored posts whose brand has guidelines.
     brand = post["sponsor_brand"]
     if post["paid_partnership"] and brand and tools.get_brand_guidelines(brand):
         emit("orchestrator", "decide", "sponsored post with guidelines, run brand safety agent")
-        results["brand_safety"] = agents.brand_safety_agent(post, emit)
+        record(agents.brand_safety_agent(post, emit))
     else:
         emit("orchestrator", "decide", "not sponsored or no guidelines, skip brand safety agent")
-        results["brand_safety"] = agents.CheckResult("brand_safety", "skipped", 1.0, "Not sponsored, or brand has no guidelines.")
-
-    for r in results.values():
-        emit(r.agent, "verdict", f"{r.verdict} ({r.confidence:.2f}) {r.reason}")
+        record(agents.CheckResult("brand_safety", "skipped", 1.0, "Not sponsored, or brand has no guidelines."))
 
     score = _trust_score(results)
     route, why = _route(post, results, score)
