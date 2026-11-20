@@ -1,0 +1,8 @@
+# Base theme for the demo UI: light, one solid accent. Animations live in ui_style.css.
+[theme]
+base = "light"
+primaryColor = "#7C3AED"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F3FF"
+textColor = "#111827"
+font = "sans serif"

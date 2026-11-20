@@ -5,3 +5,4 @@ __pycache__/
 LTK_TRUST_LAYER_PROJECT.md
 CLAUDE.md
 .streamlit/secrets.toml
+assets/posts/ltk_posts/

@@ -1,0 +1,145 @@
+/* Trust Layer look: light theme, solid colors, a little motion. Loaded by app.py.
+   Hooks are the container keys app.py sets (st-key-card-*, st-key-result-*, ...), not Streamlit's
+   internal class names, so the styling survives Streamlit upgrades. */
+
+:root {
+  --accent: #7C3AED;
+  --accent-dark: #6D28D9;
+  --accent-soft: #EDE9FE;
+  --green: #16A34A;
+  --amber: #F59E0B;
+  --red: #DC2626;
+  --sky: #0EA5E9;
+  --muted: #6B7280;
+  --line: #E5E7EB;
+  --ink: #111827;
+}
+
+/* ---------- page */
+.block-container { padding-top: 2rem; }   /* keeps the result above the fold */
+[data-testid="stSidebar"] { background: #F5F3FF; border-right: 1px solid var(--line); }
+[data-testid="stHeading"] :is(h1, h2, h3) { color: var(--accent); }
+
+[data-testid="stBaseButton-primary"] {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  transition: background .2s, transform .2s;
+}
+[data-testid="stBaseButton-primary"]:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+/* ---------- cards */
+:is([class*="st-key-card-"], [class*="st-key-post-"], [class*="st-key-result-"],
+    [class*="st-key-nofilter-"], [class*="st-key-filtered-"], [class*="st-key-evalbox-"]) {
+  background: #fff;
+  border: 1px solid var(--line) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 1px 3px rgba(17, 24, 39, .08);
+  transition: transform .25s, box-shadow .25s;
+}
+[class*="st-key-card-"]:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(17, 24, 39, .12); }
+[class*="st-key-result-"] { border-left: 5px solid var(--accent) !important; }
+[class*="st-key-nofilter-"] { border-top: 4px solid var(--red) !important; }
+[class*="st-key-filtered-"] { border-top: 4px solid var(--green) !important; }
+
+/* Each new agent step fades in. Only the last one, so earlier steps do not replay. */
+[class*="st-key-card-"] li:last-child { animation: fade-up .45s ease both; }
+
+/* ---------- badges. Every badge carries its text, so nothing depends on color alone. */
+.badge {
+  display: inline-block;
+  padding: .12rem .6rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  color: #fff;
+}
+.badge.pass { background: var(--green); }
+.badge.warn { background: var(--amber); color: var(--ink); }
+.badge.fail { background: var(--red); }
+.badge.muted { background: #fff; color: var(--muted); border: 1px solid var(--line); }
+.badge.done { background: var(--accent-soft); color: var(--accent-dark); }
+.badge.running { background: var(--sky); animation: pulse 1.2s ease-in-out infinite; }
+
+/* The route badge pops in when the score lands */
+.badge.route { font-size: 1rem; padding: .3rem .9rem; animation: pop .5s cubic-bezier(.2, 1.6, .4, 1) both; }
+
+/* ---------- result panel: the score is one solid color that matches the route */
+.score-line { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin: .2rem 0 .4rem; }
+.score-label { color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+.score { font-size: 2.4rem; font-weight: 900; line-height: 1; animation: pop .5s cubic-bezier(.2, 1.6, .4, 1) both; }
+.score.pass { color: var(--green); }
+.score.warn { color: #B45309; }   /* darker amber, readable as text on white */
+.score.fail { color: var(--red); }
+.score-of { color: var(--muted); font-weight: 700; }
+
+/* ---------- post card: product tile and creator avatar (five solid tints, picked by product id) */
+.g0 { background: #F472B6; }
+.g1 { background: #A78BFA; }
+.g2 { background: #38BDF8; }
+.g3 { background: #FBBF24; }
+.g4 { background: #34D399; }
+
+.product-tile {
+  aspect-ratio: 1;
+  max-width: 120px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-tile span { font-size: 3.4rem; animation: float 3.5s ease-in-out infinite; }
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  margin-right: .35rem;
+  font-size: .72rem;
+  font-weight: 900;
+  color: var(--ink);
+  vertical-align: middle;
+}
+
+/* ---------- post card: LTK-style tall photo with the creator's avatar on it */
+.post-photo {
+  position: relative;
+  max-width: 230px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(17, 24, 39, .15);
+  animation: fade-up .5s ease both;
+}
+.post-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .6s; }
+.post-photo:hover img { transform: scale(1.04); }
+.post-photo .avatar { position: absolute; left: 10px; bottom: 10px; margin: 0; box-shadow: 0 0 0 2px #fff; }
+.product-chip {
+  display: inline-block;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  padding: .35rem .75rem;
+  font-size: .92rem;
+  line-height: 1.5;
+}
+
+/* ---------- eval tables */
+[class*="st-key-evalbox-"] th { color: var(--accent); }
+[class*="st-key-evalbox-"] td:first-child { color: var(--muted); }
+
+/* ---------- motion */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, .55); }
+  50% { box-shadow: 0 0 0 7px rgba(14, 165, 233, 0); }
+}
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes fade-up { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Viewers who ask their system for less motion get none */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

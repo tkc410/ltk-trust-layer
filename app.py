@@ -6,7 +6,10 @@ Rule: the UI draws and never decides. All scoring lives in trust_layer/. This fi
 score_post, renders the events it emits, and reads the saved runs in results/.
 """
 import ast
+import base64
 import hmac
+import html
+import itertools
 import json
 import time
 from pathlib import Path
@@ -22,11 +25,26 @@ ROOT = Path(__file__).parent
 AGENTS = [("freshness", "Freshness"), ("disclosure", "Disclosure"), ("claim", "Claim"), ("brand_safety", "Brand safety")]
 # The demo story in order: free pass, pass after a second lookup, clear fail, human review, hard gate, the wrong pass.
 PINNED = ["p001", "p002", "p004", "p005", "p003", "p027"]
-# Every verdict and route has a text label as well as a color, so nothing depends on color alone.
-VERDICT = {"pass": ":green[**PASS**]", "warn": ":orange[**WARN**]", "fail": ":red[**FAIL**]"}
-ROUTE = {"pass": ":green[**PASS**]", "review": ":orange[**HUMAN REVIEW**]", "hold": ":red[**HOLD**]"}
-STATE = {"waiting": ":gray[waiting]", "running": ":blue[**running…**]", "done": "**done**",
-         "skipped": ":gray[**skipped**]", "not needed": ":gray[**not needed**]"}
+
+
+def badge(text, kind, extra=""):
+    """A colored pill styled in ui_style.css. It always carries its text, so nothing depends on color alone."""
+    return f'<span class="badge {kind} {extra}">{text}</span>'
+
+
+VERDICT = {v: badge(v.upper(), v) for v in ("pass", "warn", "fail")}
+ROUTE_COLOR = {"pass": "pass", "review": "warn", "hold": "fail"}  # the score number takes the route's color
+ROUTE = {"pass": badge("PASS", "pass", "route"), "review": badge("HUMAN REVIEW", "warn", "route"),
+         "hold": badge("HOLD", "fail", "route")}
+STATE = {"waiting": badge("waiting", "muted"), "running": badge("running…", "running"), "done": badge("done", "done"),
+         "skipped": badge("skipped", "muted"), "not needed": badge("not needed", "muted")}
+# Container keys become CSS classes (st-key-card-3), the stable hooks the stylesheet targets.
+# A counter keeps every key unique within a run.
+_keys = itertools.count()
+
+
+def key(prefix: str) -> str:
+    return f"{prefix}-{next(_keys)}"
 
 # Found in code review, not by a post, so it is listed first and on its own.
 DESIGN_LIMIT = ("The claim agent runs only when a cheap keyword rule spots a checkable claim: a $ price, a %, "
@@ -48,6 +66,12 @@ HISTORY = ("First live run on the 30-post set, before the step 6 fixes: **25/30*
 def md(text) -> str:
     """Streamlit reads $...$ as math, so escape dollar signs in anything we display."""
     return str(text).replace("$", r"\$")
+
+
+def safe(text) -> str:
+    """For text drawn next to HTML badges: escape HTML too, so a caption or LLM reason cannot inject markup.
+    The $ becomes an HTML entity, so Streamlit never reads it as math."""
+    return html.escape(str(text)).replace("$", "&#36;")
 
 
 def money(x) -> str:
@@ -89,11 +113,11 @@ class TraceView:
         self.result = result_slot
         self.strip, self.decisions = st.empty(), []
         self.cards = {}
-        for col, (key, title) in zip(st.columns(4), AGENTS):
-            box = col.container(border=True)
+        for col, (agent, title) in zip(st.columns(4), AGENTS):
+            box = col.container(border=True, key=key("card"))
             box.markdown(f"**{title}**")
-            self.cards[key] = {"slot": box.empty(), "state": "waiting", "steps": [], "raw": [], "result": None}
-            self.draw(key)
+            self.cards[agent] = {"slot": box.empty(), "state": "waiting", "steps": [], "raw": [], "result": None}
+            self.draw(agent)
 
     def start(self, key):
         # Agents run one after another, so when one starts, any running one has finished.
@@ -125,7 +149,7 @@ class TraceView:
             return
         self.start(agent)
         card = self.cards[agent]
-        card["steps"].append(f"- *{kind}*: {md(plain(detail) if kind == 'tool' else detail)}")
+        card["steps"].append(f"- *{kind}*: {safe(plain(detail) if kind == 'tool' else detail)}")
         if kind == "tool":
             card["raw"].append(detail)
         self.draw(agent)
@@ -136,10 +160,10 @@ class TraceView:
             text = STATE[c["state"]] + ("\n\n" + "\n".join(c["steps"]) if c["steps"] else "")
             r = c["result"]
             if r and r["verdict"] != "skipped":
-                text += f"\n\n{VERDICT[r['verdict']]} · confidence {r['confidence']:.2f}\n\n{md(r['reason'])}"
+                text += f"\n\n{VERDICT[r['verdict']]} · confidence {r['confidence']:.2f}\n\n{safe(r['reason'])}"
             elif r:
-                text += f"\n\n{md(r['reason'])}"
-            st.markdown(text)
+                text += f"\n\n{safe(r['reason'])}"
+            st.markdown(text, unsafe_allow_html=True)  # badges are HTML; all other text went through safe()
             if c["raw"]:
                 with st.expander("Raw tool output"):
                     st.code("\n".join(c["raw"]), language=None)
@@ -160,17 +184,22 @@ class TraceView:
 
 def result_panel(slot, source, outcome=None, label=None, status="waiting"):
     """Same five lines before, during and after a run, so the page does not jump when the score appears."""
-    with slot.container(border=True):
+    with slot.container(border=True, key=key("result")):
         st.caption(f"Source: {source}")
         if outcome is None:
-            st.markdown(f"### Trust score: {status}")
+            shown = badge("running…", "running") if status == "running…" else f'<span class="score-of">{status}</span>'
+            st.markdown(f'<div class="score-line"><span class="score-label">Trust score</span>{shown}</div>',
+                        unsafe_allow_html=True)
             st.markdown("Decided by: shown when the run ends")
             st.markdown("Reviewer label: shown when the run ends")
             st.caption("Cost: shown when the run ends")
             return
         agrees = "matches the reviewer label" if outcome["route"] == label else "differs from the reviewer label"
         calls = outcome["llm_calls"]
-        st.markdown(f"### Trust score {outcome['score']}/100 → {ROUTE[outcome['route']]}")
+        st.markdown(f'<div class="score-line"><span class="score-label">Trust score</span>'
+                    f'<span class="score {ROUTE_COLOR[outcome["route"]]}">{outcome["score"]}</span>'
+                    f'<span class="score-of">/100</span>'
+                    f'{ROUTE[outcome["route"]]}</div>', unsafe_allow_html=True)
         st.markdown(f"Decided by: {md(outcome['route_reason'])}")
         st.markdown(f"Reviewer label: **{label}**, {agrees}.")
         st.caption(f"Cost: {calls} LLM call{'' if calls == 1 else 's'} · {outcome['tokens']:,} tokens · "
@@ -230,10 +259,31 @@ def post_card(post):
     status = tools.get_product_status(post["product_id"])
     record = tools.get_product_record(post["product_id"])
     sponsor = f"paid partnership with {post['sponsor_brand']}" if post["paid_partnership"] else "not sponsored"
-    with st.container(border=True):
-        st.markdown(f"**{post['creator']}** · {sponsor}\n\n> {md(post['caption'])}\n\n"
-                    + md(f"**{record['name']}** ({record['brand']}) · {money(status['price_at_post'])} then, "
-                         f"{money(status['current_price'])} now · {status['status'].replace('_', ' ')}"))
+    tint = f"g{sum(map(ord, post['product_id'])) % 5}"
+    icon = load("data/product_icons.json").get(post["product_id"], "🛍️")
+    avatar = f'<span class="avatar {tint}">{post["creator"].lstrip("@")[:2].upper()}</span>'
+    photo = photo_uri(post["post_id"])
+    with st.container(border=True, key=key("post")):
+        left, right = st.columns([2, 3], vertical_alignment="center")
+        if photo:  # an LTK-style tall photo with the creator's avatar on it
+            left.markdown(f'<div class="post-photo"><img src="{photo}" alt="Lifestyle photo of the '
+                          f'{safe(record["name"])}">{avatar}</div>', unsafe_allow_html=True)
+        else:  # no photo for this post: the illustrated tile
+            left.markdown(f'<div class="product-tile {tint}"><span>{icon}</span></div>', unsafe_allow_html=True)
+        right.markdown(f'{"" if photo else avatar} **{safe(post["creator"])}** · {sponsor}'
+                       f"\n\n> {safe(post['caption'])}\n\n"
+                       f'<span class="product-chip">{icon} '
+                       + safe(f"**{record['name']}** ({record['brand']}) · {money(status['price_at_post'])} then, "
+                              f"{money(status['current_price'])} now · {status['status'].replace('_', ' ')}")
+                       + "</span>", unsafe_allow_html=True)
+
+
+@st.cache_data
+def photo_uri(post_id: str):
+    """The post's photo as a data URI, so it shows offline in replay. None when the post has no photo.
+    Photos are AI-generated stand-ins (prompts in assets/posts/IMAGE_PROMPTS.md), not real creator photos."""
+    path = ROOT / "assets" / "posts" / f"{post_id}.jpg"
+    return f"data:image/jpeg;base64,{base64.b64encode(path.read_bytes()).decode()}" if path.exists() else None
 
 
 def trace_screen(posts):
@@ -299,7 +349,7 @@ def compare_screen():
     st.markdown(f"Retrieved posts: {', '.join(q['retrieved'])}")
     for col, side, title in zip(st.columns(2), ("unfiltered", "filtered"),
                                 ("Without the trust layer", "With the trust layer")):
-        with col.container(border=True):
+        with col.container(border=True, key=key("nofilter" if side == "unfiltered" else "filtered")):
             st.markdown(f"#### {title}")
             st.caption(f"Posts given to the model: {', '.join(q[side]['posts_given']) or 'none'}")
             if q[side]["posts_given"]:
@@ -311,7 +361,8 @@ def compare_screen():
         st.markdown("Nothing was left out. Every retrieved post passed.")
     captions = {p["post_id"]: p["caption"] for p in load("data/posts.json")}
     for e in q["excluded"]:
-        st.markdown(f"- **{e['post_id']}** {ROUTE[e['route']]}: {e['reason']}. \"{md(captions[e['post_id']])}\"")
+        st.markdown(f"- **{e['post_id']}** {ROUTE[e['route']]} {safe(e['reason'])}. \"{safe(captions[e['post_id']])}\"",
+                    unsafe_allow_html=True)
 
 
 # ------------------------------------------------------------ screen 3: eval panel
@@ -340,7 +391,7 @@ def eval_screen():
         s = data["sets"][name]["summary"]
         misses += s["misses"]
         c = s["cost_per_post"]
-        with col.container(border=True):
+        with col.container(border=True, key=key("evalbox")):
             st.markdown(f"#### {title} ({s['posts']} posts)")
             st.caption(note)
             st.markdown(eval_table(s))
@@ -360,10 +411,10 @@ def eval_screen():
 
 # ------------------------------------------------------------ page
 st.set_page_config(page_title="Trust Layer for LTK AI", layout="wide")
-st.markdown("<style>.block-container {padding-top: 2rem;}</style>", unsafe_allow_html=True)  # keep results above the fold
+st.markdown(f"<style>{(ROOT / 'ui_style.css').read_text()}</style>", unsafe_allow_html=True)  # the look, see ui_style.css
 st.sidebar.title("Trust Layer")
 screen = st.sidebar.radio("Screen", ["Agent trace", "With and without", "Eval panel"])
-st.sidebar.caption("All data is synthetic.")
+st.sidebar.caption("All data is synthetic. Post photos are AI-generated stand-ins.")
 st.subheader(screen)
 if screen == "Agent trace":
     all_posts = {p["post_id"]: p for f in ("data/posts.json", "data/holdout_posts.json") for p in load(f)}
