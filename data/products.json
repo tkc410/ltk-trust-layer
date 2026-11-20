@@ -1,0 +1,10 @@
+{
+  "pr01": {"name": "Linen Throw Pillow", "retailer": "Harbor & Pine", "brand": "Harbor & Pine", "status": "in_stock", "price_at_post": 34.0, "current_price": 34.0, "material": "linen", "details": "Linen cover, feather insert, 20 inch."},
+  "pr02": {"name": "Everyday Tote", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "in_stock", "price_at_post": 48.0, "current_price": 48.0, "material": "canvas", "details": "Heavy canvas tote with leather handles."},
+  "pr03": {"name": "Glow Serum", "retailer": "Lumen Skin", "brand": "Lumen Skin", "status": "in_stock", "price_at_post": 29.0, "current_price": 29.0, "material": "n/a", "details": "Vitamin C serum for daily use. Cosmetic product."},
+  "pr04": {"name": "Cozy Crew Sweater", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "in_stock", "price_at_post": 39.0, "current_price": 62.0, "material": "acrylic blend", "details": "70% acrylic, 30% wool. Relaxed fit."},
+  "pr05": {"name": "Quilted Shoulder Bag", "retailer": "Harbor & Pine", "brand": "Harbor & Pine", "status": "in_stock", "price_at_post": 55.0, "current_price": 55.0, "material": "faux leather", "details": "Quilted faux leather bag with chain strap."},
+  "pr06": {"name": "Wide Leg Trouser", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "delisted", "price_at_post": 68.0, "current_price": null, "material": "wool blend", "details": "No longer sold."},
+  "pr07": {"name": "Clear Skin Cleanser", "retailer": "Lumen Skin", "brand": "Lumen Skin", "status": "in_stock", "price_at_post": 22.0, "current_price": 22.0, "material": "n/a", "details": "Gentle foaming cleanser. Cosmetic product, not a treatment."},
+  "pr08": {"name": "Ribbed Tank", "retailer": "Harbor & Pine", "brand": "Northwind Knits", "status": "out_of_stock", "price_at_post": 18.0, "current_price": 18.0, "material": "cotton", "details": "Ribbed cotton tank."}
+}

@@ -1,0 +1,4 @@
+{
+  "Lumen Skin": {"banned_phrases": ["cures", "treats acne", "medical grade", "guaranteed results"], "notes": "Cosmetic brand. No medical or guaranteed-result claims."},
+  "Northwind Knits": {"banned_phrases": ["cheap", "knockoff"], "notes": "Do not describe products as cheap or as knockoffs."}
+}

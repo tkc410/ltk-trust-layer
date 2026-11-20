@@ -1,0 +1,10 @@
+[
+  {"post_id": "p001", "creator": "@homewithjuno", "caption": "Refreshed the reading corner this weekend. This pillow pulls the whole room together.", "product_id": "pr01", "paid_partnership": false, "sponsor_brand": null, "label": "pass"},
+  {"post_id": "p002", "creator": "@styledbymara", "caption": "#ad My everyday tote from Northwind Knits. Under $50 and it fits a laptop.", "product_id": "pr02", "paid_partnership": true, "sponsor_brand": "Northwind Knits", "label": "pass"},
+  {"post_id": "p003", "creator": "@glowwithtess", "caption": "Obsessed with this serum, it has been in my routine every single morning.", "product_id": "pr03", "paid_partnership": true, "sponsor_brand": "Lumen Skin", "label": "hold"},
+  {"post_id": "p004", "creator": "@knitandcoffee", "caption": "This sweater is 100% cashmere and only $39. Run, do not walk.", "product_id": "pr04", "paid_partnership": false, "sponsor_brand": null, "label": "hold"},
+  {"post_id": "p005", "creator": "@budgetchic", "caption": "Found the perfect dupe for the Maison Arlet quilted bag. Looks identical in person.", "product_id": "pr05", "paid_partnership": false, "sponsor_brand": null, "label": "review"},
+  {"post_id": "p006", "creator": "@officeedit", "caption": "My most worn trousers this fall. Linked for you.", "product_id": "pr06", "paid_partnership": false, "sponsor_brand": null, "label": "hold"},
+  {"post_id": "p007", "creator": "@glowwithtess", "caption": "#sponsored This cleanser cures breakouts in a week. Thank you Lumen Skin!", "product_id": "pr07", "paid_partnership": true, "sponsor_brand": "Lumen Skin", "label": "hold"},
+  {"post_id": "p008", "creator": "@styledbymara", "caption": "Summer staple. I own this tank in three colors.", "product_id": "pr08", "paid_partnership": false, "sponsor_brand": null, "label": "hold"}
+]
