@@ -186,6 +186,20 @@ def live_run(post, on_event) -> dict:
     return traces.outcome_of(score_post(post, on_event=on_event), time.time() - start)
 
 
+def failure_in_words(e: Exception) -> str:
+    """Why a live run failed, in plain words for the audience. Matched by name so offline mode needs no SDK."""
+    name = type(e).__name__
+    if name == "APITimeoutError":
+        return f"the Claude API did not answer within {llm.TIMEOUT_SECONDS} seconds"
+    if name == "APIConnectionError":
+        return "the Claude API could not be reached (no network?)"
+    if name.endswith("Error") and hasattr(e, "status_code"):
+        return f"the Claude API returned an error (status {e.status_code})"
+    if "no API credentials" in str(e):
+        return "this server has no API credentials"
+    return f"an unexpected error ({name})"
+
+
 def recorded_label(trace) -> str:
     when = trace["recorded_at"][:16].replace("T", " ")
     return f"Replay of a run recorded on {when} UTC"
@@ -259,16 +273,16 @@ def trace_screen(posts):
             try:
                 outcome = live_run(post, view.on_event)
             except Exception as e:  # API error, timeout or no network: fall back to the recording
-                failed = f"{type(e).__name__}: {str(e)[:120]}"
+                failed = failure_in_words(e)
         if not failed:
             view.finish(outcome, post["label"], source)
             return
         area.empty()
         if not trace:
-            banner.error(f"**Live run failed** ({md(failed)}), and this post has no recording.")
+            banner.error(f"**Live run failed:** {failed}, and this post has no recording.")
             result_panel(result_slot, "none", status="live run failed")
             return
-        banner.warning(f"**Live run failed** ({md(failed)}). Showing the recording instead. **{recorded}.**")
+        banner.warning(f"**Live run failed:** {failed}. Showing the recording instead. **{recorded}.**")
     with area.container():
         view = TraceView(result_slot)
         view.finish(traces.replay(trace, view.on_event), post["label"], recorded)
