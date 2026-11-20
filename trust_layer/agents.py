@@ -11,7 +11,7 @@ CLAIM_PATTERN = re.compile(
     r"\$\d+|\d+\s?%|\bdupe\b|\bcashmere\b|\bsilk\b|\bleather\b|\bcures?\b|\btreats?\b|\bguaranteed\b",
     re.IGNORECASE,
 )
-PRICE_MOVE_LIMIT = 0.20  # a price change above 20% is worth a warning
+PRICE_RISE_LIMIT = 0.20  # a price rise above 20% is worth a warning
 
 
 @dataclass
@@ -49,8 +49,13 @@ def disclosure_agent(post: dict, emit) -> CheckResult:
         answer, usage = llm.ask_json(
             llm.SMALL_MODEL,
             "You check whether a paid creator post clearly discloses the brand relationship to a shopper.",
+            # Why: the partnership type matters. "Gifted" discloses a free product, not a payment.
             f"Caption: {post['caption']}\nSponsor: {partnership['brand']}\n"
-            "pass = clearly disclosed in words, warn = hinted but unclear, fail = not disclosed.",
+            "Partnership type: paid. The sponsor paid the creator for this post.\n"
+            "pass = the caption clearly tells a shopper the creator is paid by or partnered with the brand.\n"
+            "warn = the caption hints at a relationship but does not reveal payment, "
+            "for example it says only that the product was gifted.\n"
+            "fail = no disclosure.",
         )
         return CheckResult("disclosure", answer["verdict"], answer["confidence"], answer["reason"], [partnership], [usage])
 
@@ -69,10 +74,11 @@ def freshness_agent(post: dict, emit) -> CheckResult:
     if status["status"] == "out_of_stock":
         return CheckResult("freshness", "fail", 1.0, "Product is out of stock.", [status], flags=["phase2"])
 
-    move = abs(status["current_price"] - status["price_at_post"]) / status["price_at_post"]
-    if move > PRICE_MOVE_LIMIT:
-        return CheckResult("freshness", "warn", 1.0, f"Price moved {move:.0%} since the post.", [status])
-    return CheckResult("freshness", "pass", 1.0, "In stock, price unchanged.", [status])
+    # Why: only a rise hurts the shopper. A price drop is good news, so it never warns.
+    rise = (status["current_price"] - status["price_at_post"]) / status["price_at_post"]
+    if rise > PRICE_RISE_LIMIT:
+        return CheckResult("freshness", "warn", 1.0, f"Price rose {rise:.0%} since the post.", [status])
+    return CheckResult("freshness", "pass", 1.0, "In stock, no large price rise.", [status])
 
 
 # --------------------------------------------------------------------- claim
@@ -89,6 +95,9 @@ def claim_agent(post: dict, emit) -> CheckResult:
             "fail = the data contradicts a claim, or the caption makes a health or medical benefit claim.\n"
             "warn = a claim cannot be checked against the data and a shopper would rely on it, "
             "such as a comparison to another brand's product.\n"
+            # Why: "dupe for the pricey ones" names nothing, so there is nothing to check.
+            "A comparison is checkable only when it names a brand or product. A vague comparison "
+            "such as \"a dupe for the pricey ones\" is enthusiasm, not a claim.\n"
             "pass = every checkable claim matches the data.\n"
             # Why: without this, the model warns on details the short record simply omits.
             "If the full product description could settle a claim, return \"needs_more\": true "

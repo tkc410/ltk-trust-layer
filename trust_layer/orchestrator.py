@@ -84,6 +84,16 @@ def _route(post: dict, results: dict, score: int) -> tuple[str, str]:
         return "review", f"low confidence from {', '.join(unsure)}"
 
     if score >= PASS_AT:
+        # Why: with these weights a lone fail or claim warn can still reach 80, so pass or
+        # review would hang on where the threshold sits. These two rules make it explicit.
+        failed = [r.agent for r in results.values() if r.verdict == "fail"]
+        if failed:
+            return "review", f"{', '.join(failed)} failed, and any fail blocks a pass"
+        if results["claim"].verdict == "warn":
+            return "review", "claim warned, and a claim warn needs review"
+        # Why: an unclear disclosure ("gifted") on a paid post needs a human, whatever the score.
+        if post["paid_partnership"] and results["disclosure"].verdict == "warn":
+            return "review", "paid post with unclear disclosure needs review"
         return "pass", "score at or above pass threshold"
     if score >= REVIEW_AT:
         return "review", "score in the review band"

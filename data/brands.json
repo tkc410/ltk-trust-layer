@@ -1,4 +1,5 @@
 {
   "Lumen Skin": {"banned_phrases": ["cures", "treats acne", "medical grade", "guaranteed results"], "notes": "Cosmetic brand. No medical or guaranteed-result claims."},
-  "Northwind Knits": {"banned_phrases": ["cheap", "knockoff"], "notes": "Do not describe products as cheap or as knockoffs."}
+  "Northwind Knits": {"banned_phrases": ["cheap", "knockoff"], "notes": "Do not describe products as cheap or as knockoffs."},
+  "Brightwell Home": {"banned_phrases": ["dupe", "knockoff", "designer"], "notes": "Do not compare products to designer or luxury brands."}
 }

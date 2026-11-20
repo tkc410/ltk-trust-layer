@@ -2,6 +2,7 @@
 
     python run_demo.py           # all posts
     python run_demo.py p004      # one post
+    python run_demo.py holdout   # the fresh posts written after the fixes, never tuned on
 """
 import json
 import sys
@@ -10,9 +11,11 @@ from pathlib import Path
 from trust_layer import llm
 from trust_layer.orchestrator import score_post
 
-posts = json.loads((Path(__file__).parent / "data" / "posts.json").read_text())
-if len(sys.argv) > 1:
-    posts = [p for p in posts if p["post_id"] == sys.argv[1]]
+arg = sys.argv[1] if len(sys.argv) > 1 else None
+data_file = "holdout_posts.json" if arg == "holdout" else "posts.json"
+posts = json.loads((Path(__file__).parent / "data" / data_file).read_text())
+if arg and arg != "holdout":
+    posts = [p for p in posts if p["post_id"] == arg]
 
 print("Mode:", "LIVE (Claude API)" if llm.live() else "OFFLINE (rule stand-ins, no API key set)")
 correct = 0

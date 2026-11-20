@@ -30,5 +30,8 @@ Models are set with TRUST_SMALL_MODEL and TRUST_STRONG_MODEL (see trust_layer/ll
 
 ## Status
 
-Built: agents, orchestrator, scoring, 8 sample posts.
-Not built yet: full 30-post labeled set, eval script, with/without comparison, UI, recorded traces, Phase 2 mock.
+Built: agents, orchestrator, scoring, 30 labeled posts (data/posts.json) and 10 holdout posts (data/holdout_posts.json).
+Not built yet: eval script, with/without comparison, UI, recorded traces, Phase 2 mock.
+
+Labels are what a careful reviewer would decide, not what the rules predict. The holdout set was
+written after the scoring fixes and run once, unchanged, so its result is the honest one.
