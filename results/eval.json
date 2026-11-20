@@ -1,0 +1,2063 @@
+{
+ "generated_at": "2026-11-20T04:21:00+00:00",
+ "mode": "live",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "runs": 3,
+ "sets": {
+  "main": {
+   "summary": {
+    "posts": 30,
+    "runs": 3,
+    "per_run": [
+     {
+      "exact": 28,
+      "pass_vs_not": 29,
+      "wrong_passes": 1,
+      "by_group": {
+       "clean": {
+        "correct": 7,
+        "total": 7
+       },
+       "hold": {
+        "correct": 12,
+        "total": 13
+       },
+       "borderline": {
+        "correct": 9,
+        "total": 10
+       }
+      }
+     },
+     {
+      "exact": 28,
+      "pass_vs_not": 29,
+      "wrong_passes": 1,
+      "by_group": {
+       "clean": {
+        "correct": 7,
+        "total": 7
+       },
+       "hold": {
+        "correct": 12,
+        "total": 13
+       },
+       "borderline": {
+        "correct": 9,
+        "total": 10
+       }
+      }
+     },
+     {
+      "exact": 28,
+      "pass_vs_not": 29,
+      "wrong_passes": 1,
+      "by_group": {
+       "clean": {
+        "correct": 7,
+        "total": 7
+       },
+       "hold": {
+        "correct": 12,
+        "total": 13
+       },
+       "borderline": {
+        "correct": 9,
+        "total": 10
+       }
+      }
+     }
+    ],
+    "route_changed": [],
+    "verdict_changed": [],
+    "cost_per_post": {
+     "llm_calls": {
+      "min": 0,
+      "max": 3
+     },
+     "tokens": {
+      "min": 0,
+      "max": 1821
+     },
+     "seconds": {
+      "min": 0.0,
+      "max": 9.2
+     }
+    },
+    "zero_llm_posts": 10,
+    "total_llm_calls": 93,
+    "total_tokens": 37347,
+    "misses": [
+     {
+      "post_id": "p019",
+      "label": "hold",
+      "routes": [
+       "review",
+       "review",
+       "review"
+      ]
+     },
+     {
+      "post_id": "p027",
+      "label": "review",
+      "routes": [
+       "pass",
+       "pass",
+       "pass"
+      ]
+     }
+    ]
+   },
+   "posts": [
+    {
+     "post_id": "p001",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p002",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 3,
+       "tokens": 1542,
+       "seconds": 8.41
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 3,
+       "tokens": 1640,
+       "seconds": 7.71
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 3,
+       "tokens": 1821,
+       "seconds": 9.2
+      }
+     ]
+    },
+    {
+     "post_id": "p003",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 75,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 586,
+       "seconds": 1.88
+      },
+      {
+       "route": "hold",
+       "score": 75,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 571,
+       "seconds": 2.62
+      },
+      {
+       "route": "hold",
+       "score": 75,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 580,
+       "seconds": 2.58
+      }
+     ]
+    },
+    {
+     "post_id": "p004",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 19,
+       "verdicts": {
+        "freshness": "warn",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 454,
+       "seconds": 1.52
+      },
+      {
+       "route": "hold",
+       "score": 19,
+       "verdicts": {
+        "freshness": "warn",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 454,
+       "seconds": 1.83
+      },
+      {
+       "route": "hold",
+       "score": 19,
+       "verdicts": {
+        "freshness": "warn",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 454,
+       "seconds": 1.37
+      }
+     ]
+    },
+    {
+     "post_id": "p005",
+     "label": "review",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "review",
+       "score": 69,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "warn",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 690,
+       "seconds": 2.99
+      },
+      {
+       "route": "review",
+       "score": 69,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "warn",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 677,
+       "seconds": 2.86
+      },
+      {
+       "route": "review",
+       "score": 69,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "warn",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 652,
+       "seconds": 3.05
+      }
+     ]
+    },
+    {
+     "post_id": "p006",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p007",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 40,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "fail",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 2,
+       "tokens": 763,
+       "seconds": 3.98
+      },
+      {
+       "route": "hold",
+       "score": 40,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "fail",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 2,
+       "tokens": 759,
+       "seconds": 2.78
+      },
+      {
+       "route": "hold",
+       "score": 40,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "fail",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 2,
+       "tokens": 756,
+       "seconds": 2.85
+      }
+     ]
+    },
+    {
+     "post_id": "p008",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p009",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p010",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 276,
+       "seconds": 0.72
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 276,
+       "seconds": 0.97
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 278,
+       "seconds": 0.82
+      }
+     ]
+    },
+    {
+     "post_id": "p011",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 446,
+       "seconds": 1.51
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 453,
+       "seconds": 1.45
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 442,
+       "seconds": 1.67
+      }
+     ]
+    },
+    {
+     "post_id": "p012",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 257,
+       "seconds": 1.33
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 261,
+       "seconds": 1.16
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 255,
+       "seconds": 1.71
+      }
+     ]
+    },
+    {
+     "post_id": "p013",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 626,
+       "seconds": 3.17
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 696,
+       "seconds": 3.51
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 619,
+       "seconds": 2.89
+      }
+     ]
+    },
+    {
+     "post_id": "p014",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 75,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 554,
+       "seconds": 1.94
+      },
+      {
+       "route": "hold",
+       "score": 75,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 540,
+       "seconds": 2.84
+      },
+      {
+       "route": "hold",
+       "score": 75,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 556,
+       "seconds": 2.54
+      }
+     ]
+    },
+    {
+     "post_id": "p015",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p016",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "hold",
+       "score": 0,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p017",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 437,
+       "seconds": 1.82
+      },
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 437,
+       "seconds": 1.65
+      },
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 437,
+       "seconds": 1.65
+      }
+     ]
+    },
+    {
+     "post_id": "p018",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 437,
+       "seconds": 1.52
+      },
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 437,
+       "seconds": 1.68
+      },
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 437,
+       "seconds": 1.67
+      }
+     ]
+    },
+    {
+     "post_id": "p019",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "review",
+       "score": 67,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 1,
+       "tokens": 254,
+       "seconds": 0.87
+      },
+      {
+       "route": "review",
+       "score": 67,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 1,
+       "tokens": 254,
+       "seconds": 0.8
+      },
+      {
+       "route": "review",
+       "score": 67,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 1,
+       "tokens": 254,
+       "seconds": 0.82
+      }
+     ]
+    },
+    {
+     "post_id": "p020",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 40,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "fail",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 2,
+       "tokens": 848,
+       "seconds": 3.6
+      },
+      {
+       "route": "hold",
+       "score": 40,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "fail",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 2,
+       "tokens": 849,
+       "seconds": 3.59
+      },
+      {
+       "route": "hold",
+       "score": 40,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "fail",
+        "brand_safety": "fail"
+       },
+       "llm_calls": 2,
+       "tokens": 836,
+       "seconds": 3.93
+      }
+     ]
+    },
+    {
+     "post_id": "p021",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 85,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 3,
+       "tokens": 1024,
+       "seconds": 4.24
+      },
+      {
+       "route": "hold",
+       "score": 85,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 3,
+       "tokens": 999,
+       "seconds": 3.54
+      },
+      {
+       "route": "hold",
+       "score": 85,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 3,
+       "tokens": 1002,
+       "seconds": 3.48
+      }
+     ]
+    },
+    {
+     "post_id": "p022",
+     "label": "review",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "review",
+       "score": 88,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "warn",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 651,
+       "seconds": 3.06
+      },
+      {
+       "route": "review",
+       "score": 88,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "warn",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 653,
+       "seconds": 3.64
+      },
+      {
+       "route": "review",
+       "score": 88,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "warn",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 648,
+       "seconds": 2.85
+      }
+     ]
+    },
+    {
+     "post_id": "p023",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p024",
+     "label": "review",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "review",
+       "score": 50,
+       "verdicts": {
+        "freshness": "warn",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "review",
+       "score": 50,
+       "verdicts": {
+        "freshness": "warn",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "review",
+       "score": 50,
+       "verdicts": {
+        "freshness": "warn",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p025",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p026",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 478,
+       "seconds": 1.72
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 479,
+       "seconds": 1.8
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 478,
+       "seconds": 1.76
+      }
+     ]
+    },
+    {
+     "post_id": "p027",
+     "label": "review",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 967,
+       "seconds": 4.58
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 1062,
+       "seconds": 5.27
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "pass",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 963,
+       "seconds": 6.51
+      }
+     ]
+    },
+    {
+     "post_id": "p028",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 450,
+       "seconds": 1.56
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 452,
+       "seconds": 1.61
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 467,
+       "seconds": 1.64
+      }
+     ]
+    },
+    {
+     "post_id": "p029",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "p030",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 570,
+       "seconds": 4.2
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 567,
+       "seconds": 2.51
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 586,
+       "seconds": 3.31
+      }
+     ]
+    }
+   ]
+  },
+  "holdout": {
+   "summary": {
+    "posts": 10,
+    "runs": 3,
+    "per_run": [
+     {
+      "exact": 8,
+      "pass_vs_not": 10,
+      "wrong_passes": 0,
+      "by_group": {
+       "clean": {
+        "correct": 3,
+        "total": 3
+       },
+       "hold": {
+        "correct": 3,
+        "total": 3
+       },
+       "borderline": {
+        "correct": 2,
+        "total": 4
+       }
+      }
+     },
+     {
+      "exact": 8,
+      "pass_vs_not": 10,
+      "wrong_passes": 0,
+      "by_group": {
+       "clean": {
+        "correct": 3,
+        "total": 3
+       },
+       "hold": {
+        "correct": 3,
+        "total": 3
+       },
+       "borderline": {
+        "correct": 2,
+        "total": 4
+       }
+      }
+     },
+     {
+      "exact": 8,
+      "pass_vs_not": 10,
+      "wrong_passes": 0,
+      "by_group": {
+       "clean": {
+        "correct": 3,
+        "total": 3
+       },
+       "hold": {
+        "correct": 3,
+        "total": 3
+       },
+       "borderline": {
+        "correct": 2,
+        "total": 4
+       }
+      }
+     }
+    ],
+    "route_changed": [],
+    "verdict_changed": [],
+    "cost_per_post": {
+     "llm_calls": {
+      "min": 0,
+      "max": 2
+     },
+     "tokens": {
+      "min": 0,
+      "max": 1780
+     },
+     "seconds": {
+      "min": 0.0,
+      "max": 8.81
+     }
+    },
+    "zero_llm_posts": 1,
+    "total_llm_calls": 36,
+    "total_tokens": 17885,
+    "misses": [
+     {
+      "post_id": "h09",
+      "label": "hold",
+      "routes": [
+       "review",
+       "review",
+       "review"
+      ]
+     },
+     {
+      "post_id": "h10",
+      "label": "hold",
+      "routes": [
+       "review",
+       "review",
+       "review"
+      ]
+     }
+    ]
+   },
+   "posts": [
+    {
+     "post_id": "h01",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 0,
+       "tokens": 0,
+       "seconds": 0.0
+      }
+     ]
+    },
+    {
+     "post_id": "h02",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 263,
+       "seconds": 0.82
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 263,
+       "seconds": 1.72
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 270,
+       "seconds": 0.91
+      }
+     ]
+    },
+    {
+     "post_id": "h03",
+     "label": "pass",
+     "group": "clean",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 2,
+       "tokens": 1365,
+       "seconds": 5.7
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 2,
+       "tokens": 1512,
+       "seconds": 7.09
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 2,
+       "tokens": 1365,
+       "seconds": 6.24
+      }
+     ]
+    },
+    {
+     "post_id": "h04",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 427,
+       "seconds": 1.6
+      },
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 427,
+       "seconds": 1.83
+      },
+      {
+       "route": "hold",
+       "score": 38,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "fail",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 427,
+       "seconds": 1.45
+      }
+     ]
+    },
+    {
+     "post_id": "h05",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 58,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 246,
+       "seconds": 0.81
+      },
+      {
+       "route": "hold",
+       "score": 58,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 253,
+       "seconds": 0.81
+      },
+      {
+       "route": "hold",
+       "score": 58,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 244,
+       "seconds": 0.94
+      }
+     ]
+    },
+    {
+     "post_id": "h06",
+     "label": "hold",
+     "group": "hold",
+     "runs": [
+      {
+       "route": "hold",
+       "score": 62,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 302,
+       "seconds": 0.8
+      },
+      {
+       "route": "hold",
+       "score": 62,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 311,
+       "seconds": 1.14
+      },
+      {
+       "route": "hold",
+       "score": 62,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "fail",
+        "claim": "skipped",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 295,
+       "seconds": 1.03
+      }
+     ]
+    },
+    {
+     "post_id": "h07",
+     "label": "review",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "review",
+       "score": 88,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "warn",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 793,
+       "seconds": 3.68
+      },
+      {
+       "route": "review",
+       "score": 88,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "warn",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 701,
+       "seconds": 3.65
+      },
+      {
+       "route": "review",
+       "score": 88,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "warn",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 2,
+       "tokens": 828,
+       "seconds": 3.87
+      }
+     ]
+    },
+    {
+     "post_id": "h08",
+     "label": "pass",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 610,
+       "seconds": 2.9
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 577,
+       "seconds": 2.42
+      },
+      {
+       "route": "pass",
+       "score": 100,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "pass",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 1,
+       "tokens": 578,
+       "seconds": 2.3
+      }
+     ]
+    },
+    {
+     "post_id": "h09",
+     "label": "hold",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "review",
+       "score": 58,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 254,
+       "seconds": 1.08
+      },
+      {
+       "route": "review",
+       "score": 58,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 244,
+       "seconds": 1.02
+      },
+      {
+       "route": "review",
+       "score": 58,
+       "verdicts": {
+        "freshness": "fail",
+        "disclosure": "pass",
+        "claim": "skipped",
+        "brand_safety": "pass"
+       },
+       "llm_calls": 1,
+       "tokens": 244,
+       "seconds": 1.15
+      }
+     ]
+    },
+    {
+     "post_id": "h10",
+     "label": "hold",
+     "group": "borderline",
+     "runs": [
+      {
+       "route": "review",
+       "score": 69,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "warn",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 2,
+       "tokens": 1538,
+       "seconds": 7.43
+      },
+      {
+       "route": "review",
+       "score": 69,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "warn",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 2,
+       "tokens": 1768,
+       "seconds": 8.81
+      },
+      {
+       "route": "review",
+       "score": 69,
+       "verdicts": {
+        "freshness": "pass",
+        "disclosure": "skipped",
+        "claim": "warn",
+        "brand_safety": "skipped"
+       },
+       "llm_calls": 2,
+       "tokens": 1780,
+       "seconds": 8.76
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
