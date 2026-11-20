@@ -1,0 +1,120 @@
+{
+ "post_id": "h05",
+ "recorded_at": "2026-11-20T18:06:39+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'delisted', 'price_at_post': 36.0, 'current_price': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "fail (1.00) Product is no longer sold.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': True, 'brand': 'Northwind Knits'}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "rule",
+   "detail": "found clear tag #ad, no LLM needed",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "pass (1.00) Paid post carries #ad.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "no checkable claim, skip claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "skipped (1.00) No checkable claim in caption.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "sponsored post with guidelines, run brand safety agent",
+   "t": 0.0
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "tool",
+   "detail": "guidelines for Northwind Knits -> {'banned_phrases': ['cheap', 'knockoff'], 'notes': 'Do not describe products as cheap or as knockoffs.'}",
+   "t": 0.0
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "pass (0.95) The caption discloses the sponsorship with #ad and contains none of the banned phrases 'cheap' or 'knockoff'.",
+   "t": 0.725
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 58 -> hold: hard gate: product delisted",
+   "t": 0.725
+  }
+ ],
+ "outcome": {
+  "score": 58,
+  "route": "hold",
+  "route_reason": "hard gate: product delisted",
+  "llm_calls": 1,
+  "tokens": 250,
+  "seconds": 0.73,
+  "verdicts": {
+   "freshness": {
+    "verdict": "fail",
+    "confidence": 1.0,
+    "reason": "Product is no longer sold."
+   },
+   "disclosure": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "Paid post carries #ad."
+   },
+   "claim": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "No checkable claim in caption."
+   },
+   "brand_safety": {
+    "verdict": "pass",
+    "confidence": 0.95,
+    "reason": "The caption discloses the sponsorship with #ad and contains none of the banned phrases 'cheap' or 'knockoff'."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-haiku-5-5",
+   "input_tokens": 180,
+   "output_tokens": 70,
+   "seconds": 0.72
+  }
+ ]
+}

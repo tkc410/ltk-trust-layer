@@ -1,0 +1,101 @@
+{
+ "post_id": "h01",
+ "recorded_at": "2026-11-20T18:06:30+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 28.0, 'current_price': 28.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': False, 'brand': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not a paid post, no disclosure needed.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "no checkable claim, skip claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "skipped (1.00) No checkable claim in caption.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "not sponsored or no guidelines, skip brand safety agent",
+   "t": 0.0
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not sponsored, or brand has no guidelines.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 100 -> pass: score at or above pass threshold",
+   "t": 0.0
+  }
+ ],
+ "outcome": {
+  "score": 100,
+  "route": "pass",
+  "route_reason": "score at or above pass threshold",
+  "llm_calls": 0,
+  "tokens": 0,
+  "seconds": 0.0,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not a paid post, no disclosure needed."
+   },
+   "claim": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "No checkable claim in caption."
+   },
+   "brand_safety": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not sponsored, or brand has no guidelines."
+   }
+  }
+ },
+ "llm_usage": []
+}

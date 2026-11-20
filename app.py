@@ -6,12 +6,14 @@ Rule: the UI draws and never decides. All scoring lives in trust_layer/. This fi
 score_post, renders the events it emits, and reads the saved runs in results/.
 """
 import ast
+import hmac
 import json
 import time
 from pathlib import Path
 
 import streamlit as st
 
+import traces
 from trust_layer import llm, tools
 from trust_layer.orchestrator import score_post
 
@@ -149,16 +151,17 @@ class TraceView:
         c["result"] = r
         self.draw(key)
 
-    def finish(self, outcome, label):
+    def finish(self, outcome, label, source):
         for key, r in outcome["verdicts"].items():  # fills in any card the events did not complete
             if not self.cards[key]["result"]:
                 self.complete(key, r)
-        result_panel(self.result, outcome, label)
+        result_panel(self.result, source, outcome, label)
 
 
-def result_panel(slot, outcome=None, label=None, status="waiting"):
-    """Same four lines before, during and after a run, so the page does not jump when the score appears."""
+def result_panel(slot, source, outcome=None, label=None, status="waiting"):
+    """Same five lines before, during and after a run, so the page does not jump when the score appears."""
     with slot.container(border=True):
+        st.caption(f"Source: {source}")
         if outcome is None:
             st.markdown(f"### Trust score: {status}")
             st.markdown("Decided by: shown when the run ends")
@@ -175,17 +178,38 @@ def result_panel(slot, outcome=None, label=None, status="waiting"):
 
 
 def live_run(post, on_event) -> dict:
-    """Event source for a live run. Step 11 adds a replay source that returns the same outcome shape."""
+    """Event source 1: a live run through the engine. Event source 2 is traces.replay, same outcome shape."""
+    if not llm.live():
+        # Without credentials the engine would quietly use offline rules. That is not a live run.
+        raise RuntimeError("no API credentials on this server")
     start = time.time()
-    d = score_post(post, on_event=on_event)
-    return {
-        "score": d["score"], "route": d["route"], "route_reason": d["route_reason"],
-        "llm_calls": d["llm_calls"],
-        "tokens": sum(u["input_tokens"] + u["output_tokens"] for u in d["llm_usage"]),
-        "seconds": time.time() - start,
-        "verdicts": {k: {"verdict": r.verdict, "confidence": r.confidence, "reason": r.reason}
-                     for k, r in d["results"].items()},
-    }
+    return traces.outcome_of(score_post(post, on_event=on_event), time.time() - start)
+
+
+def recorded_label(trace) -> str:
+    when = trace["recorded_at"][:16].replace("T", " ")
+    return f"Replay of a run recorded on {when} UTC"
+
+
+def live_mode() -> bool:
+    """Replay is the default. Live spends API credits, so it needs the passcode from the secrets store."""
+    try:
+        expected = st.secrets.get("LIVE_PASSCODE")
+    except Exception:  # no secrets file on this machine
+        expected = None
+    if not expected:
+        # No selector at all, so the sidebar can never show Live while the page is in replay.
+        st.sidebar.caption("Mode: Replay. Live mode is not set up on this server.")
+        return False
+    if st.sidebar.radio("Mode", ["Replay", "Live"], horizontal=True) != "Live":
+        return False
+    code = st.sidebar.text_input("Live passcode", type="password")
+    if not code:
+        return False
+    if hmac.compare_digest(code.encode(), str(expected).encode()):
+        return True
+    st.sidebar.error("Wrong passcode. Live mode stays locked.")
+    return False
 
 
 def post_card(post):
@@ -202,19 +226,52 @@ def trace_screen(posts):
     ids = PINNED + [i for i in posts if i not in PINNED]
     pid = st.sidebar.selectbox("Creator post", ids,
                                format_func=lambda i: f"{'📌 ' if i in PINNED else ''}{i} {posts[i]['creator']}")
+    live = live_mode()
     run = st.sidebar.button("Run trust checks", type="primary")
-    st.sidebar.caption("LIVE: real Claude API calls" if llm.live() else "OFFLINE: simple rules stand in for the LLM")
+    post, trace = posts[pid], traces.load(pid)
+    recorded = recorded_label(trace) if trace else None
+
+    # The mode is always on screen, so a recording never looks like a live run.
+    banner = st.empty()
+    if live:
+        banner.success("**Live**: real Claude API calls, happening now.")
+    elif trace:
+        banner.info(f"**{recorded}.** No API calls. Models: {trace['models']['small']}, {trace['models']['strong']}.")
+    else:
+        banner.warning("No recorded run for this post. Unlock live mode to run it.")
+    source = "Live run" if live else (recorded or "none")
+
     # Post and result side by side at the top, so the score is on screen without scrolling.
     left, right = st.columns([3, 2])
     with left:
-        post_card(posts[pid])
+        post_card(post)
     result_slot = right.empty()
-    if not run:
-        result_panel(result_slot, status="press Run trust checks in the sidebar")
+    if not run or not (live or trace):
+        result_panel(result_slot, source, status="press Run trust checks in the sidebar")
         return
-    result_panel(result_slot, status="running…")
-    view = TraceView(result_slot)
-    view.finish(live_run(posts[pid], view.on_event), posts[pid]["label"])
+    result_panel(result_slot, source, status="running…")
+
+    area = st.empty()
+    if live:
+        failed = None
+        with area.container():
+            view = TraceView(result_slot)
+            try:
+                outcome = live_run(post, view.on_event)
+            except Exception as e:  # API error, timeout or no network: fall back to the recording
+                failed = f"{type(e).__name__}: {str(e)[:120]}"
+        if not failed:
+            view.finish(outcome, post["label"], source)
+            return
+        area.empty()
+        if not trace:
+            banner.error(f"**Live run failed** ({md(failed)}), and this post has no recording.")
+            result_panel(result_slot, "none", status="live run failed")
+            return
+        banner.warning(f"**Live run failed** ({md(failed)}). Showing the recording instead. **{recorded}.**")
+    with area.container():
+        view = TraceView(result_slot)
+        view.finish(traces.replay(trace, view.on_event), post["label"], recorded)
 
 
 # ------------------------------------------------------------ screen 2: with and without
@@ -291,10 +348,10 @@ def eval_screen():
 st.set_page_config(page_title="Trust Layer for LTK AI", layout="wide")
 st.markdown("<style>.block-container {padding-top: 2rem;}</style>", unsafe_allow_html=True)  # keep results above the fold
 st.sidebar.title("Trust Layer")
-screen = st.sidebar.radio("Screen", ["Live agent trace", "With and without", "Eval panel"])
+screen = st.sidebar.radio("Screen", ["Agent trace", "With and without", "Eval panel"])
 st.sidebar.caption("All data is synthetic.")
 st.subheader(screen)
-if screen == "Live agent trace":
+if screen == "Agent trace":
     all_posts = {p["post_id"]: p for f in ("data/posts.json", "data/holdout_posts.json") for p in load(f)}
     trace_screen(all_posts)
 elif screen == "With and without":

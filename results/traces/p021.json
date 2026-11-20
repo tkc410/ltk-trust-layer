@@ -1,0 +1,138 @@
+{
+ "post_id": "p021",
+ "recorded_at": "2026-11-20T18:06:19+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 38.0, 'current_price': 38.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': True, 'brand': 'Brightwell Home'}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "decide",
+   "detail": "paid post with no clear tag, checking wording",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "fail (0.95) The caption promotes the Brightwell Home vase with no mention of the paid partnership or any #ad or sponsored label.",
+   "t": 0.919
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.919
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Ceramic Bud Vase', 'brand': 'Brightwell Home', 'retailer': 'Brightwell Home', 'current_price': 38.0, 'material': 'ceramic'}",
+   "t": 0.919
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "pass (0.97) The only checkable claim, price under $40, matches the listed price of $38, and 'so chic' is opinion.",
+   "t": 1.842
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "sponsored post with guidelines, run brand safety agent",
+   "t": 1.842
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "tool",
+   "detail": "guidelines for Brightwell Home -> {'banned_phrases': ['dupe', 'knockoff', 'designer'], 'notes': 'Do not compare products to designer or luxury brands.'}",
+   "t": 1.842
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "pass (0.93) The caption contains none of the banned phrases (dupe, knockoff, designer) and makes no comparison to designer or luxury brands.",
+   "t": 2.651
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 85 -> hold: hard gate: paid post with no disclosure",
+   "t": 2.651
+  }
+ ],
+ "outcome": {
+  "score": 85,
+  "route": "hold",
+  "route_reason": "hard gate: paid post with no disclosure",
+  "llm_calls": 3,
+  "tokens": 1002,
+  "seconds": 2.65,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "fail",
+    "confidence": 0.95,
+    "reason": "The caption promotes the Brightwell Home vase with no mention of the paid partnership or any #ad or sponsored label."
+   },
+   "claim": {
+    "verdict": "pass",
+    "confidence": 0.97,
+    "reason": "The only checkable claim, price under $40, matches the listed price of $38, and 'so chic' is opinion."
+   },
+   "brand_safety": {
+    "verdict": "pass",
+    "confidence": 0.93,
+    "reason": "The caption contains none of the banned phrases (dupe, knockoff, designer) and makes no comparison to designer or luxury brands."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-haiku-5-5",
+   "input_tokens": 239,
+   "output_tokens": 67,
+   "seconds": 0.91
+  },
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 382,
+   "output_tokens": 63,
+   "seconds": 0.92
+  },
+  {
+   "model": "claude-haiku-5-5",
+   "input_tokens": 180,
+   "output_tokens": 71,
+   "seconds": 0.8
+  }
+ ]
+}

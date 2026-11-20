@@ -1,0 +1,114 @@
+{
+ "post_id": "p026",
+ "recorded_at": "2026-11-20T18:06:24+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 28.0, 'current_price': 28.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': False, 'brand': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not a paid post, no disclosure needed.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Heavyweight Tee', 'brand': 'Harbor & Pine', 'retailer': 'Harbor & Pine', 'current_price': 28.0, 'material': 'cotton'}",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "pass (0.88) The $28 price and cotton material match the data, 'heavy' fits the Heavyweight Tee name, and 'dupe for the pricey ones' is a vague comparison, so it counts as enthusiasm rather than a checkable claim.",
+   "t": 2.058
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "not sponsored or no guidelines, skip brand safety agent",
+   "t": 2.059
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not sponsored, or brand has no guidelines.",
+   "t": 2.059
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 100 -> pass: score at or above pass threshold",
+   "t": 2.059
+  }
+ ],
+ "outcome": {
+  "score": 100,
+  "route": "pass",
+  "route_reason": "score at or above pass threshold",
+  "llm_calls": 1,
+  "tokens": 631,
+  "seconds": 2.06,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not a paid post, no disclosure needed."
+   },
+   "claim": {
+    "verdict": "pass",
+    "confidence": 0.88,
+    "reason": "The $28 price and cotton material match the data, 'heavy' fits the Heavyweight Tee name, and 'dupe for the pricey ones' is a vague comparison, so it counts as enthusiasm rather than a checkable claim."
+   },
+   "brand_safety": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not sponsored, or brand has no guidelines."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 389,
+   "output_tokens": 242,
+   "seconds": 2.05
+  }
+ ]
+}

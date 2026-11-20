@@ -1,0 +1,126 @@
+{
+ "post_id": "p030",
+ "recorded_at": "2026-11-20T18:06:30+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 149.0, 'current_price': 149.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': True, 'brand': 'Brightwell Home'}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "decide",
+   "detail": "paid post with no clear tag, checking wording",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "pass (0.90) The caption states \"Partnered with Brightwell Home,\" which clearly tells shoppers the creator has a relationship with the sponsoring brand, though it does not explicitly say the post was paid.",
+   "t": 0.895
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "no checkable claim, skip claim agent",
+   "t": 0.895
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "skipped (1.00) No checkable claim in caption.",
+   "t": 0.895
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "sponsored post with guidelines, run brand safety agent",
+   "t": 0.895
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "tool",
+   "detail": "guidelines for Brightwell Home -> {'banned_phrases': ['dupe', 'knockoff', 'designer'], 'notes': 'Do not compare products to designer or luxury brands.'}",
+   "t": 0.895
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "pass (0.95) The caption contains none of the banned phrases and makes no comparison to designer or luxury brands.",
+   "t": 1.678
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 100 -> pass: score at or above pass threshold",
+   "t": 1.678
+  }
+ ],
+ "outcome": {
+  "score": 100,
+  "route": "pass",
+  "route_reason": "score at or above pass threshold",
+  "llm_calls": 2,
+  "tokens": 583,
+  "seconds": 1.68,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "pass",
+    "confidence": 0.9,
+    "reason": "The caption states \"Partnered with Brightwell Home,\" which clearly tells shoppers the creator has a relationship with the sponsoring brand, though it does not explicitly say the post was paid."
+   },
+   "claim": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "No checkable claim in caption."
+   },
+   "brand_safety": {
+    "verdict": "pass",
+    "confidence": 0.95,
+    "reason": "The caption contains none of the banned phrases and makes no comparison to designer or luxury brands."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-haiku-5-5",
+   "input_tokens": 246,
+   "output_tokens": 92,
+   "seconds": 0.89
+  },
+  {
+   "model": "claude-haiku-5-5",
+   "input_tokens": 187,
+   "output_tokens": 58,
+   "seconds": 0.78
+  }
+ ]
+}

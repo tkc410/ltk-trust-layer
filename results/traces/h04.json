@@ -1,0 +1,114 @@
+{
+ "post_id": "h04",
+ "recorded_at": "2026-11-20T18:06:38+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 95.0, 'current_price': 95.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': False, 'brand': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not a paid post, no disclosure needed.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Round Wall Mirror', 'brand': 'Brightwell Home', 'retailer': 'Brightwell Home', 'current_price': 95.0, 'material': 'iron'}",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "fail (0.97) The data lists the material as iron, not solid brass, and the price as $95, not $60.",
+   "t": 0.855
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "not sponsored or no guidelines, skip brand safety agent",
+   "t": 0.855
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not sponsored, or brand has no guidelines.",
+   "t": 0.855
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 38 -> hold: score below review threshold",
+   "t": 0.855
+  }
+ ],
+ "outcome": {
+  "score": 38,
+  "route": "hold",
+  "route_reason": "score below review threshold",
+  "llm_calls": 1,
+  "tokens": 427,
+  "seconds": 0.86,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not a paid post, no disclosure needed."
+   },
+   "claim": {
+    "verdict": "fail",
+    "confidence": 0.97,
+    "reason": "The data lists the material as iron, not solid brass, and the price as $95, not $60."
+   },
+   "brand_safety": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not sponsored, or brand has no guidelines."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 372,
+   "output_tokens": 55,
+   "seconds": 0.85
+  }
+ ]
+}

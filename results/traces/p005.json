@@ -1,0 +1,114 @@
+{
+ "post_id": "p005",
+ "recorded_at": "2026-11-20T18:05:59+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 55.0, 'current_price': 55.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': False, 'brand': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not a paid post, no disclosure needed.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Quilted Shoulder Bag', 'brand': 'Harbor & Pine', 'retailer': 'Harbor & Pine', 'current_price': 55.0, 'material': 'faux leather'}",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "warn (0.78) The caption says the bag looks identical to a named Maison Arlet product, and the product data has no information about that bag, so a shopper would be relying on a claim that can't be verified.",
+   "t": 3.154
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "not sponsored or no guidelines, skip brand safety agent",
+   "t": 3.154
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not sponsored, or brand has no guidelines.",
+   "t": 3.154
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 69 -> review: score in the review band",
+   "t": 3.154
+  }
+ ],
+ "outcome": {
+  "score": 69,
+  "route": "review",
+  "route_reason": "score in the review band",
+  "llm_calls": 1,
+  "tokens": 671,
+  "seconds": 3.15,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not a paid post, no disclosure needed."
+   },
+   "claim": {
+    "verdict": "warn",
+    "confidence": 0.78,
+    "reason": "The caption says the bag looks identical to a named Maison Arlet product, and the product data has no information about that bag, so a shopper would be relying on a claim that can't be verified."
+   },
+   "brand_safety": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not sponsored, or brand has no guidelines."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 397,
+   "output_tokens": 274,
+   "seconds": 3.15
+  }
+ ]
+}

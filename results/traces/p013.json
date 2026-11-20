@@ -1,0 +1,114 @@
+{
+ "post_id": "p013",
+ "recorded_at": "2026-11-20T18:06:07+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 30.0, 'current_price': 30.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': False, 'brand': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not a paid post, no disclosure needed.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Classic Belt', 'brand': 'Harbor & Pine', 'retailer': 'Harbor & Pine', 'current_price': 30.0, 'material': 'leather'}",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "pass (0.85) The data lists the material as leather and the current price as $30, which match the caption's two checkable claims.",
+   "t": 2.678
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "not sponsored or no guidelines, skip brand safety agent",
+   "t": 2.678
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not sponsored, or brand has no guidelines.",
+   "t": 2.678
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 100 -> pass: score at or above pass threshold",
+   "t": 2.678
+  }
+ ],
+ "outcome": {
+  "score": 100,
+  "route": "pass",
+  "route_reason": "score at or above pass threshold",
+  "llm_calls": 1,
+  "tokens": 667,
+  "seconds": 2.68,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not a paid post, no disclosure needed."
+   },
+   "claim": {
+    "verdict": "pass",
+    "confidence": 0.85,
+    "reason": "The data lists the material as leather and the current price as $30, which match the caption's two checkable claims."
+   },
+   "brand_safety": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not sponsored, or brand has no guidelines."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 372,
+   "output_tokens": 295,
+   "seconds": 2.67
+  }
+ ]
+}

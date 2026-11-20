@@ -1,0 +1,132 @@
+{
+ "post_id": "p020",
+ "recorded_at": "2026-11-20T18:06:17+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 18.0, 'current_price': 18.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "pass (1.00) In stock, no large price rise.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': True, 'brand': 'Lumen Skin'}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "rule",
+   "detail": "found clear tag #sponsored, no LLM needed",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "pass (1.00) Paid post carries #sponsored.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Spot Gel', 'brand': 'Lumen Skin', 'retailer': 'Lumen Skin', 'current_price': 18.0, 'material': 'n/a'}",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "fail (0.90) The caption claims the gel 'treats acne overnight,' which is a health benefit claim that the product data does not support.",
+   "t": 2.356
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "sponsored post with guidelines, run brand safety agent",
+   "t": 2.356
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "tool",
+   "detail": "guidelines for Lumen Skin -> {'banned_phrases': ['cures', 'treats acne', 'medical grade', 'guaranteed results'], 'notes': 'Cosmetic brand. No medical or guaranteed-result claims.'}",
+   "t": 2.356
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "fail (0.97) The caption uses the banned phrase \"treats acne\" and makes a medical-style efficacy claim, which the cosmetic brand's guidelines prohibit.",
+   "t": 3.277
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 40 -> hold: score below review threshold",
+   "t": 3.277
+  }
+ ],
+ "outcome": {
+  "score": 40,
+  "route": "hold",
+  "route_reason": "score below review threshold",
+  "llm_calls": 2,
+  "tokens": 851,
+  "seconds": 3.28,
+  "verdicts": {
+   "freshness": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "In stock, no large price rise."
+   },
+   "disclosure": {
+    "verdict": "pass",
+    "confidence": 1.0,
+    "reason": "Paid post carries #sponsored."
+   },
+   "claim": {
+    "verdict": "fail",
+    "confidence": 0.9,
+    "reason": "The caption claims the gel 'treats acne overnight,' which is a health benefit claim that the product data does not support."
+   },
+   "brand_safety": {
+    "verdict": "fail",
+    "confidence": 0.97,
+    "reason": "The caption uses the banned phrase \"treats acne\" and makes a medical-style efficacy claim, which the cosmetic brand's guidelines prohibit."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 381,
+   "output_tokens": 188,
+   "seconds": 2.35
+  },
+  {
+   "model": "claude-haiku-5-5",
+   "input_tokens": 201,
+   "output_tokens": 81,
+   "seconds": 0.92
+  }
+ ]
+}

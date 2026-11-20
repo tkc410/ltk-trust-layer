@@ -1,0 +1,114 @@
+{
+ "post_id": "p004",
+ "recorded_at": "2026-11-20T18:05:56+00:00",
+ "models": {
+  "small": "claude-haiku-5-5",
+  "strong": "claude-sonnet-5-5"
+ },
+ "events": [
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "run freshness and disclosure (no LLM cost)",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "tool",
+   "detail": "product status -> {'status': 'in_stock', 'price_at_post': 39.0, 'current_price': 62.0}",
+   "t": 0.0
+  },
+  {
+   "agent": "freshness",
+   "kind": "verdict",
+   "detail": "warn (1.00) Price rose 59% since the post.",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "tool",
+   "detail": "partnership lookup -> {'paid': False, 'brand': None}",
+   "t": 0.0
+  },
+  {
+   "agent": "disclosure",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not a paid post, no disclosure needed.",
+   "t": 0.0
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "caption has a checkable claim, run claim agent",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "tool",
+   "detail": "product record -> {'name': 'Cozy Crew Sweater', 'brand': 'Northwind Knits', 'retailer': 'Harbor & Pine', 'current_price': 62.0, 'material': 'acrylic blend'}",
+   "t": 0.0
+  },
+  {
+   "agent": "claim",
+   "kind": "verdict",
+   "detail": "fail (0.97) Caption claims 100% cashmere at $39, but data shows an acrylic blend priced at $62.00.",
+   "t": 0.907
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "decide",
+   "detail": "not sponsored or no guidelines, skip brand safety agent",
+   "t": 0.907
+  },
+  {
+   "agent": "brand_safety",
+   "kind": "verdict",
+   "detail": "skipped (1.00) Not sponsored, or brand has no guidelines.",
+   "t": 0.907
+  },
+  {
+   "agent": "orchestrator",
+   "kind": "route",
+   "detail": "score 19 -> hold: score below review threshold",
+   "t": 0.907
+  }
+ ],
+ "outcome": {
+  "score": 19,
+  "route": "hold",
+  "route_reason": "score below review threshold",
+  "llm_calls": 1,
+  "tokens": 453,
+  "seconds": 0.91,
+  "verdicts": {
+   "freshness": {
+    "verdict": "warn",
+    "confidence": 1.0,
+    "reason": "Price rose 59% since the post."
+   },
+   "disclosure": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not a paid post, no disclosure needed."
+   },
+   "claim": {
+    "verdict": "fail",
+    "confidence": 0.97,
+    "reason": "Caption claims 100% cashmere at $39, but data shows an acrylic blend priced at $62.00."
+   },
+   "brand_safety": {
+    "verdict": "skipped",
+    "confidence": 1.0,
+    "reason": "Not sponsored, or brand has no guidelines."
+   }
+  }
+ },
+ "llm_usage": [
+  {
+   "model": "claude-sonnet-5-5",
+   "input_tokens": 390,
+   "output_tokens": 63,
+   "seconds": 0.9
+  }
+ ]
+}
